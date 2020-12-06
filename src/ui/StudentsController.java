@@ -1,17 +1,16 @@
 package ui;
 
-import java.util.Optional;
-
-import customExceptions.EntityRepeatedException;
+import java.io.IOException;
 import customExceptions.NullEntityException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.Parent;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Register;
 import model.Student;
@@ -64,41 +63,24 @@ public class StudentsController {
 	@FXML
 	void addRegister(ActionEvent event) {
 		if (tableViewStudents.getSelectionModel().getSelectedItem() != null) {
-
-			String idCourse = showInputTextDialog("Add the id of the course to register", "INFORMATION");
-			if (!idCourse.isEmpty()) {
-				Student studentSelected = tableViewStudents.getSelectionModel().getSelectedItem();
-				studentSelected.addRegister();
-				Register register = studentSelected.getRegisters().get(studentSelected.getRegisters().size() - 1);
-				try {
-					register.addCourse(idCourse);
-					MainController.showAlert("Added the course to the register", "INFORMATION", AlertType.INFORMATION);
-
-				} catch (NullEntityException e) {
-					MainController.showAlert(e.getMessage(), "ERROR", AlertType.ERROR);
-				} catch (EntityRepeatedException e) {
-					MainController.showAlert(e.getMessage(), "ERROR", AlertType.ERROR);
-				}
-			} else {
-				MainController.showAlert("You need the id of the course to register", "WARNING", AlertType.WARNING);
-			}
-		} else {
-			MainController.showAlert("You need the select a student", "WARNING", AlertType.WARNING);
+			Student student = tableViewStudents.getSelectionModel().getSelectedItem();
+			student.addRegister();
+			Register register = student.getRegisters().get(student.getRegisters().size() - 1);
+			loadStudentsView(register);
 		}
 	}
 
-	private String showInputTextDialog(String message, String title) {
-		String out = "";
-		TextInputDialog dialog = new TextInputDialog();
-
-		dialog.setTitle(title);
-		dialog.setContentText(message);
-
-		Optional<String> result = dialog.showAndWait();
-		if (result.get() != null) {
-			out = result.get();
+	public void loadStudentsView(Register register) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("registerStudent.fxml"));
+			Parent root = loader.load();
+			RegisterStudentController controller = loader.getController();
+			controller.setLastController(this);
+			controller.setRegister(register);
+			lastController.getMainController().getPane().setCenter(root);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return out;
 	}
 
 	@FXML
@@ -110,6 +92,10 @@ public class StudentsController {
 				initTableView();
 				MainController.showAlert("The student: " + studentSelected.getName() + " has been deleted!", "WARNING",
 						AlertType.WARNING);
+				codeTxt.setText("");
+				nameTxt.setText("");
+				lastnameTxt.setText("");
+				passwordField.setText("");
 			} catch (NullEntityException e) {
 				// Not gonna happen
 				MainController.showAlert(e.getMessage(), "ERROR", AlertType.ERROR);
@@ -152,7 +138,7 @@ public class StudentsController {
 		nameTC.setCellValueFactory(new PropertyValueFactory<Student, String>("name"));
 		lastnameTC.setCellValueFactory(new PropertyValueFactory<Student, String>("lastName"));
 		tableViewStudents.getItems().clear();
-		tableViewStudents.getItems().addAll(teacher.getStudents());
+		tableViewStudents.getItems().addAll(teacher.getSchool().getStudents());
 		tableViewStudents.refresh();
 	}
 

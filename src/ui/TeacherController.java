@@ -108,7 +108,7 @@ public class TeacherController {
 		if (!input.isEmpty()) {
 			try {
 				tableViewStudents.getItems().clear();
-				tableViewStudents.getItems().addAll(teacher.getStudentsByCourse(""));
+				tableViewStudents.getItems().addAll(teacher.getStudentsByCourse(input));
 			} catch (NullEntityException e1) {
 				initTableView();
 				MainController.showAlert(e1.getMessage(), "ERROR", AlertType.ERROR);
@@ -135,7 +135,8 @@ public class TeacherController {
 		dialog.setContentText(message);
 
 		Optional<String> result = dialog.showAndWait();
-		if (result.get() != null) {
+
+		if (result.isPresent()) {
 			out = result.get();
 		}
 		return out;
