@@ -6,7 +6,6 @@ import java.util.Collections;
 import customExceptions.BinaryTreeCastException;
 import customExceptions.EntityRepeatedException;
 import customExceptions.NullEntityException;
-import model.util.BinaryTree;
 
 /**
  * The Class Course.
