@@ -339,3 +339,4 @@ public class Course implements ICourse, Comparable<Course> {
 	}
 	
 }
+

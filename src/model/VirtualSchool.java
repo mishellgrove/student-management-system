@@ -303,4 +303,34 @@ public class VirtualSchool implements IPaths {
 	public int searchDirector(String code) {
 		return searchDirector(code, 0, directors.size() - 1);
 	}
+
+	public Person searchUser(String user, String password) {
+
+		sortTeachers();
+		int index = searchTeacher(user);
+		if (index != -1) {
+			Person person = teachers.get(index);
+			if (person.getPassword().equals(password)) {
+				return person;
+			}
+		}
+		sortDirectors();
+		index = searchDirector(user);
+		if (index != -1) {
+			Person person = directors.get(index);
+			if (person.getPassword().equals(password)) {
+				return person;
+			}
+		}
+		sortStudents();
+		index = searchStudent(user);
+		if (index != -1) {
+			Person person = students.get(index);
+			if (person.getPassword().equals(password)) {
+				return person;
+			}
+		}
+		return null;
+
+	}
 }

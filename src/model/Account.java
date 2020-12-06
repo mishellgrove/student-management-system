@@ -3,7 +3,7 @@ package model;
 import customExceptions.AmountInputException;
 import customExceptions.NotEnoughMoneyException;
 
-
+// TODO: Auto-generated Javadoc
 /**
  * The Class Account.
  */

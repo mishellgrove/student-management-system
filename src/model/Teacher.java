@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+import customExceptions.BinaryTreeCastException;
 import customExceptions.EntityRepeatedException;
 import customExceptions.NullEntityException;
 
@@ -44,12 +46,63 @@ public class Teacher extends Employee {
 			throw new NullEntityException("The course with id: " + id + " does not exists");
 		}
 		int index2 = searchCourse(id);
-		if(index2 != -1) {
+		if (index2 != -1) {
 			throw new EntityRepeatedException("The course with id: " + id + " already exists!");
 		}
 		Course course = school.getCourses().get(index);
 		course.setTeacher(this);
 		courses.add(course);
+	}
+
+	public ArrayList<Student> getStudentsByCourse(String idCourse) throws NullEntityException {
+		ArrayList<Student> students = new ArrayList<Student>();
+		int index = searchCourse(idCourse);
+		if (index == -1) {
+			throw new NullEntityException("The course: " + idCourse + " does not exists");
+		}
+		Course course = courses.get(index);
+		for (int i = 0; i < course.getRegisters().size(); i++) {
+			Register register = course.getRegisters().get(i);
+			students.add(register.getStudent());
+		}
+		return students;
+	}
+
+	public ArrayList<Student> getStudents() {
+		ArrayList<Student> students = new ArrayList<Student>();
+		for (Course course : courses) {
+			for (Register register : course.getRegisters()) {
+				students.add(register.getStudent());
+			}
+		}
+		return students;
+	}
+
+	public ArrayList<Student> getStudentsDescByLastName() throws BinaryTreeCastException {
+		ArrayList<Student> students = new ArrayList<Student>();
+		for (Course course : courses) {
+			course.initStudents();
+			ArrayList<Person> persons = course.getStudents().getInOrder();
+			for (Person person : persons) {
+				students.add((Student) person);
+			}
+		}
+		StudentComparator comparator = new StudentComparator();
+		Collections.sort(students, comparator);
+		return students;
+	}
+
+	public ArrayList<Student> getStudentsAscByCode() throws BinaryTreeCastException {
+		ArrayList<Student> students = new ArrayList<Student>();
+		for (Course course : courses) {
+			course.initStudents();
+			ArrayList<Person> persons = course.getStudents().getInOrder();
+			for (Person person : persons) {
+				students.add((Student) person);
+			}
+		}
+		Collections.sort(students);
+		return students;
 	}
 
 	/**
@@ -116,7 +169,7 @@ public class Teacher extends Employee {
 	 * @return the int
 	 */
 	public int searchCourse(String idCourse) {
-		return searchCourse(idCourse, 0, courses.size()-1);
+		return searchCourse(idCourse, 0, courses.size() - 1);
 	}
 
 	/**
@@ -173,4 +226,5 @@ public class Teacher extends Employee {
 		this.school = school;
 	}
 }
+
 

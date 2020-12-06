@@ -110,6 +110,7 @@ public class Student extends Person {
 	 * @param o the o
 	 * @return the int
 	 */
+	/*
 	@Override
 	public int compareTo(Person o) {
 		int comparation = 0;
@@ -122,4 +123,6 @@ public class Student extends Person {
 		}
 		return comparation;
 	}
+	*/
 }
+
