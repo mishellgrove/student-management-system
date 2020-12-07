@@ -27,6 +27,7 @@ public class Teacher extends Employee {
 	 * @param code     the code
 	 * @param name     the name
 	 * @param lastName the last name
+	 * @param password the password
 	 * @param salary   the salary
 	 * @param account  the account
 	 * @param school   the school
@@ -39,6 +40,13 @@ public class Teacher extends Employee {
 		courses = new ArrayList<Course>();
 	}
 
+	/**
+	 * Adds the course.
+	 *
+	 * @param id the id
+	 * @throws NullEntityException     the null entity exception
+	 * @throws EntityRepeatedException the entity repeated exception
+	 */
 	public void addCourse(String id) throws NullEntityException, EntityRepeatedException {
 
 		int index = school.searchCourse(id);
@@ -54,6 +62,36 @@ public class Teacher extends Employee {
 		courses.add(course);
 	}
 
+	/**
+	 * Adds the students.
+	 *
+	 * @param code     the code
+	 * @param name     the name
+	 * @param lastName the last name
+	 * @param password the password
+	 * @throws NullEntityException the null entity exception
+	 */
+	public void addStudents(String code, String name, String lastName, String password) throws NullEntityException {
+		school.addStudents(code, name, lastName, password);
+	}
+
+	/**
+	 * Removes the student.
+	 *
+	 * @param code the code
+	 * @throws NullEntityException the null entity exception
+	 */
+	public void removeStudent(String code) throws NullEntityException {
+		school.removeStudent(code);
+	}
+
+	/**
+	 * Gets the students by course.
+	 *
+	 * @param idCourse the id course
+	 * @return the students by course
+	 * @throws NullEntityException the null entity exception
+	 */
 	public ArrayList<Student> getStudentsByCourse(String idCourse) throws NullEntityException {
 		ArrayList<Student> students = new ArrayList<Student>();
 		int index = searchCourse(idCourse);
@@ -68,6 +106,11 @@ public class Teacher extends Employee {
 		return students;
 	}
 
+	/**
+	 * Gets the students.
+	 *
+	 * @return the students
+	 */
 	public ArrayList<Student> getStudents() {
 		ArrayList<Student> students = new ArrayList<Student>();
 		for (Course course : courses) {
@@ -78,13 +121,22 @@ public class Teacher extends Employee {
 		return students;
 	}
 
+	/**
+	 * Gets the students desc by last name.
+	 *
+	 * @return the students desc by last name
+	 * @throws BinaryTreeCastException the binary tree cast exception
+	 */
 	public ArrayList<Student> getStudentsDescByLastName() throws BinaryTreeCastException {
 		ArrayList<Student> students = new ArrayList<Student>();
 		for (Course course : courses) {
 			course.initStudents();
-			ArrayList<Person> persons = course.getStudents().getInOrder();
-			for (Person person : persons) {
-				students.add((Student) person);
+			if (course.getRegisters().size() > 0) {
+
+				ArrayList<Person> persons = course.getStudents().getInOrder();
+				for (Person person : persons) {
+					students.add((Student) person);
+				}
 			}
 		}
 		StudentComparator comparator = new StudentComparator();
@@ -92,13 +144,21 @@ public class Teacher extends Employee {
 		return students;
 	}
 
+	/**
+	 * Gets the students asc by code.
+	 *
+	 * @return the students asc by code
+	 * @throws BinaryTreeCastException the binary tree cast exception
+	 */
 	public ArrayList<Student> getStudentsAscByCode() throws BinaryTreeCastException {
 		ArrayList<Student> students = new ArrayList<Student>();
 		for (Course course : courses) {
 			course.initStudents();
-			ArrayList<Person> persons = course.getStudents().getInOrder();
-			for (Person person : persons) {
-				students.add((Student) person);
+			if (course.getRegisters().size() > 0) {
+				ArrayList<Person> persons = course.getStudents().getInOrder();
+				for (Person person : persons) {
+					students.add((Student) person);
+				}
 			}
 		}
 		Collections.sort(students);
@@ -122,6 +182,9 @@ public class Teacher extends Employee {
 		courses.remove(index);
 	}
 
+	/**
+	 * Sort by selection.
+	 */
 	public void sortBySelection() {
 		int size = courses.size();
 		for (int i = 0; i < size; i++) {
@@ -225,6 +288,10 @@ public class Teacher extends Employee {
 	public void setSchool(VirtualSchool school) {
 		this.school = school;
 	}
+
+	@Override
+	public String toString() {
+		return getName() + " " + getLastName();
+	}
+
 }
-
-
