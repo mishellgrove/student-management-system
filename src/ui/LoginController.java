@@ -23,6 +23,7 @@ public class LoginController {
 	@FXML
 	private PasswordField passwordField;
 	private MainController mainController;
+	private ImageThread images;
 
 	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
@@ -41,6 +42,7 @@ public class LoginController {
 				MainController.showAlert("Welcome user: " + person.getName(), "WELCOME!", AlertType.INFORMATION);
 				if (person instanceof Teacher) {
 					loadTeacherView((Teacher) person);
+					images.isStop(true);
 				}
 			} else {
 				MainController.showAlert("The user or the password is not correct", "WARNING", AlertType.WARNING);
@@ -93,7 +95,7 @@ public class LoginController {
 
 	@FXML
 	public void initialize() {
-		Thread images = new ImageThread(imageView);
+		images = new ImageThread(imageView);
 		images.start();
 	}
 

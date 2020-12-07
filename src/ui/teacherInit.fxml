@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.TeacherController">
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.TeacherController">
 	<children>
 		<HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="600.0">
 			<children>
@@ -28,7 +28,7 @@
 		<HBox prefHeight="270.0" prefWidth="600.0" spacing="20.0" VBox.vgrow="ALWAYS">
 			<children>
 				<Pane prefHeight="100.0" prefWidth="32.0" HBox.hgrow="ALWAYS" />
-				<TableView fx:id="tableViewStudents" prefHeight="270.0" prefWidth="309.0" HBox.hgrow="ALWAYS">
+				<TableView fx:id="tableViewStudents" prefHeight="292.0" prefWidth="673.0" HBox.hgrow="ALWAYS">
 					<columns>
 						<TableColumn fx:id="codeTC" prefWidth="75.0" text="Code" />
 						<TableColumn fx:id="nameTC" prefWidth="75.0" text="Name" />
