@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+import customExceptions.EntityRepeatedException;
 import customExceptions.NullEntityException;
 
 /**
@@ -44,6 +45,23 @@ public class Director extends Employee {
 		this.school = school;
 	}
 
+	public void addCourseToATeacher(String idCourse, String idTeacher)
+			throws NullEntityException, EntityRepeatedException {
+		int indexCourse = school.searchCourse(idCourse);
+		int indexTeacher = school.searchTeacher(idTeacher);
+		if (indexCourse == -1 || indexTeacher == -1) {
+			throw new NullEntityException("The teacher or the course does not exists");
+		}
+		Teacher teacher = school.getTeachers().get(indexTeacher);
+		teacher.addCourse(idCourse);
+		Course course = school.getCourses().get(indexCourse);
+		course.setTeacher(teacher);
+	}
+
+	public void removeTeacher(String code) throws NullEntityException {
+		school.removeTeacher(code);
+	}
+
 	public void addCourse(String id, String name, String description, Teacher teacher) throws NullEntityException {
 		school.addCourse(id, name, description, teacher);
 	}
@@ -59,6 +77,10 @@ public class Director extends Employee {
 	public void addTeacher(String code, String name, String lastName, String password, double salary)
 			throws NullEntityException {
 		school.addTeacher(code, name, lastName, password, salary);
+	}
+
+	public ArrayList<Teacher> getTeachers() {
+		return school.getTeachers();
 	}
 
 	public ArrayList<Course> getCoursesByNameSelection() {

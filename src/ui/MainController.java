@@ -1,6 +1,10 @@
 package ui;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
@@ -36,6 +40,18 @@ public class MainController {
 
 	public BorderPane getPane() {
 		return pane;
+	}
+
+	public void loadLogin() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+			Parent root = loader.load();
+			LoginController controller = loader.getController();
+			controller.setMainController(this);
+			pane.setCenter(root);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void showAlert(String message, String title, AlertType alertType) {
