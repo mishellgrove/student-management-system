@@ -1,4 +1,4 @@
-																																		package model;
+package model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -238,6 +238,9 @@ public class Register {
 	 */
 	public void setState(String state) {
 		this.state = state;
+		for (Course course : courses) {
+			course.setState(state);
+		}
 	}
 
 	/**

@@ -10,7 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import model.Director;
 import model.Person;
+import model.Student;
 import model.Teacher;
 import model.VirtualSchool;
 import threads.ImageThread;
@@ -25,6 +27,11 @@ public class LoginController {
 	private MainController mainController;
 	private ImageThread images;
 
+
+	public MainController getMainController() {
+		return mainController;
+	}
+
 	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
 	}
@@ -32,7 +39,6 @@ public class LoginController {
 	@FXML
 	public void handleLogin(ActionEvent e) {
 		if (isInputValid()) {
-
 			String user = userField.getText();
 			String password = passwordField.getText();
 			Main main = mainController.getMain();
@@ -42,6 +48,14 @@ public class LoginController {
 				MainController.showAlert("Welcome user: " + person.getName(), "WELCOME!", AlertType.INFORMATION);
 				if (person instanceof Teacher) {
 					loadTeacherView((Teacher) person);
+					images.isStop(true);
+				}
+				if (person instanceof Student) {
+					loadStudentsView((Student) person);
+					images.isStop(true);
+				}
+				if (person instanceof Director) {
+					loadDirectorView((Director) person);
 					images.isStop(true);
 				}
 			} else {
@@ -64,13 +78,26 @@ public class LoginController {
 		}
 	}
 
-	public void loadDirectorView(Teacher teacher) {
+	public void loadDirectorView(Director director) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("teacherInit.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("directorInit.fxml"));
 			Parent root = loader.load();
-			TeacherController controller = loader.getController();
-			controller.setMainController(mainController);
-			controller.setTeacher(teacher);
+			DirectorInitController controller = loader.getController();
+			controller.setDirector(director);
+			controller.setLastController(this);
+			mainController.getPane().setCenter(root);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void loadStudentsView(Student student) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("studentsView.fxml"));
+			Parent root = loader.load();
+			StudentsViewController controller = loader.getController();
+			controller.setLoginController(this);
+			controller.setStudent(student);
 			mainController.getPane().setCenter(root);
 		} catch (IOException e) {
 			e.printStackTrace();
