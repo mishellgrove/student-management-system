@@ -1,4 +1,4 @@
-package model;
+																																		package model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,10 +16,18 @@ public class Register {
 
 	/** The student. */
 	private Student student;
+
+	/** The date. */
 	private Date date;
 
 	/** The courses. */
 	private ArrayList<Course> courses;
+
+	/** The total. */
+	private double total;
+
+	/** The state. */
+	private String state;
 
 	/**
 	 * Instantiates a new register.
@@ -32,6 +40,7 @@ public class Register {
 		this.student = student;
 		date = new Date();
 		courses = new ArrayList<Course>();
+		state = "Inactive";
 	}
 
 	/**
@@ -47,9 +56,9 @@ public class Register {
 		if (index == -1) {
 			throw new NullEntityException("The course wiuth id: " + id + " does not exists");
 		}
-		index = searchCourse(id);
-		if(index != -1) {
-			throw new EntityRepeatedException("The course with id: "+id+ " already exists!");
+		int index2 = searchCourse(id);
+		if (index2 != -1) {
+			throw new EntityRepeatedException("The course with id: " + id + " already exists!");
 		}
 		Course course = school.getCourses().get(index);
 		courses.add(course);
@@ -82,7 +91,7 @@ public class Register {
 	 * @return the int
 	 */
 	private int searchCourse(String idCourse, int low, int high) {
-		int mid =  low+ (high-low) / 2;
+		int mid = low + (high - low) / 2;
 		if (high < low) {
 			return -1;
 		}
@@ -103,9 +112,12 @@ public class Register {
 	 * @return the int
 	 */
 	public int searchCourse(String idCourse) {
-		return searchCourse(idCourse, 0, courses.size());
+		return searchCourse(idCourse, 0, courses.size() - 1);
 	}
 
+	/**
+	 * Sort by insertion.
+	 */
 	public void sortByInsertion() {
 		int j;
 		Course course;
@@ -120,10 +132,20 @@ public class Register {
 		}
 	}
 
+	/**
+	 * Gets the date.
+	 *
+	 * @return the date
+	 */
 	public Date getDate() {
 		return date;
 	}
 
+	/**
+	 * Sets the date.
+	 *
+	 * @param date the new date
+	 */
 	public void setDate(Date date) {
 		this.date = date;
 	}
@@ -180,6 +202,42 @@ public class Register {
 	 */
 	public void setCourses(ArrayList<Course> courses) {
 		this.courses = courses;
+	}
+
+	/**
+	 * Gets the total.
+	 *
+	 * @return the total
+	 */
+	public double getTotal() {
+		return courses.size() * 200000;
+	}
+
+	/**
+	 * Sets the total.
+	 *
+	 * @param total the new total
+	 */
+	public void setTotal(double total) {
+		this.total = total;
+	}
+
+	/**
+	 * Gets the state.
+	 *
+	 * @return the state
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * Sets the state.
+	 *
+	 * @param state the new state
+	 */
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	/**

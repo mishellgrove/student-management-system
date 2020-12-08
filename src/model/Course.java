@@ -7,6 +7,7 @@ import customExceptions.BinaryTreeCastException;
 import customExceptions.EntityRepeatedException;
 import customExceptions.NullEntityException;
 
+
 /**
  * The Class Course.
  */
@@ -33,6 +34,9 @@ public class Course implements ICourse, Comparable<Course> {
 	/** The school. */
 	private VirtualSchool school;
 
+	/** The state. */
+	private String state;
+
 	/**
 	 * Instantiates a new course.
 	 *
@@ -52,6 +56,7 @@ public class Course implements ICourse, Comparable<Course> {
 		this.description = description;
 		this.teacher = teacher;
 		this.school = school;
+		state = "Inactive";
 	}
 
 	/**
@@ -70,6 +75,7 @@ public class Course implements ICourse, Comparable<Course> {
 		this.description = description;
 		this.teacher = teacher;
 		this.school = school;
+		state = "Inactive";
 	}
 
 	/**
@@ -111,7 +117,7 @@ public class Course implements ICourse, Comparable<Course> {
 	 * @return the int
 	 */
 	public int searchRegister(String registerId) {
-		return searchRegister(registers, registerId, 0, registers.size()-1);
+		return searchRegister(registers, registerId, 0, registers.size() - 1);
 	}
 
 	/**
@@ -143,7 +149,7 @@ public class Course implements ICourse, Comparable<Course> {
 	 */
 	public void initStudents() throws BinaryTreeCastException {
 		if (registers.size() == 0) {
-			throw new BinaryTreeCastException("The registers are empty so there are no students");
+			return;
 		}
 		int mid = registers.size() / 2;
 		Student root = registers.get(mid).getStudent();
@@ -155,6 +161,24 @@ public class Course implements ICourse, Comparable<Course> {
 			Register register = registers.get(i);
 			students.add(register.getStudent());
 		}
+	}
+
+	/**
+	 * Gets the state.
+	 *
+	 * @return the state
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * Sets the state.
+	 *
+	 * @param state the new state
+	 */
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	/**
@@ -319,6 +343,12 @@ public class Course implements ICourse, Comparable<Course> {
 		return true;
 	}
 
+	/**
+	 * Compare to.
+	 *
+	 * @param o the o
+	 * @return the int
+	 */
 	@Override
 	public int compareTo(Course o) {
 		int id = Integer.parseInt(this.id);
@@ -332,10 +362,14 @@ public class Course implements ICourse, Comparable<Course> {
 		return comparation;
 	}
 
+	/**
+	 * To string.
+	 *
+	 * @return the string
+	 */
 	@Override
 	public String toString() {
 		return "Course [id=" + id + "]";
 	}
-	
-}
 
+}
