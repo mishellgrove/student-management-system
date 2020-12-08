@@ -45,11 +45,13 @@ public class StudentsController {
 	private Teacher teacher;
 	private TeacherController lastController;
 
+
+
 	@FXML
 	void add(ActionEvent event) {
 		if (isInputValid()) {
 			try {
-				teacher.getSchool().addStudents(codeTxt.getText(), nameTxt.getText(), lastnameTxt.getText(),
+				teacher.addStudents(codeTxt.getText(), nameTxt.getText(), lastnameTxt.getText(),
 						passwordField.getText());
 				MainController.showAlert("The student: " + nameTxt.getText() + " has been added!", "INFORMATION",
 						AlertType.INFORMATION);
@@ -88,7 +90,7 @@ public class StudentsController {
 		if (tableViewStudents.getSelectionModel().getSelectedItem() != null) {
 			Student studentSelected = tableViewStudents.getSelectionModel().getSelectedItem();
 			try {
-				teacher.getSchool().removeStudent(studentSelected.getCode());
+				teacher.removeStudent(studentSelected.getCode());
 				initTableView();
 				MainController.showAlert("The student: " + studentSelected.getName() + " has been deleted!", "WARNING",
 						AlertType.WARNING);

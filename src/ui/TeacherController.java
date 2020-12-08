@@ -61,6 +61,10 @@ public class TeacherController {
 	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
 	}
+    @FXML
+    void goBackButton(ActionEvent event) {
+    	lastController.getMainController().loadLogin();
+    }
 
 	@FXML
 	void addStudents(ActionEvent e) {
