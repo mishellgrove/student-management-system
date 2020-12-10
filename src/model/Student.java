@@ -9,9 +9,7 @@ import customExceptions.EmptySearchException;
  */
 public class Student extends Person {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The registers. */
@@ -93,6 +91,11 @@ public class Student extends Person {
 		return searchRegister(id, 0, registers.size() - 1);
 	}
 
+	/**
+	 * Gets the all courses.
+	 *
+	 * @return the all courses
+	 */
 	public ArrayList<Course> getAllCourses() {
 		ArrayList<Course> courses = new ArrayList<Course>();
 		for (Register register : registers) {
@@ -101,6 +104,12 @@ public class Student extends Person {
 		return courses;
 	}
 
+	/**
+	 * Gets the courses by name.
+	 *
+	 * @param name the name
+	 * @return the courses by name
+	 */
 	public ArrayList<Course> getCoursesByName(String name) {
 		ArrayList<Course> courses = new ArrayList<Course>();
 		for (Register register : registers) {
@@ -113,6 +122,12 @@ public class Student extends Person {
 		return courses;
 	}
 
+	/**
+	 * Gets the course by teacher.
+	 *
+	 * @param nameTeacher the name teacher
+	 * @return the course by teacher
+	 */
 	public ArrayList<Course> getCourseByTeacher(String nameTeacher) {
 		ArrayList<Course> courses = new ArrayList<Course>();
 		for (Register register : registers) {
@@ -125,6 +140,13 @@ public class Student extends Person {
 		return courses;
 	}
 
+	/**
+	 * Gets the courses.
+	 *
+	 * @param criteria the criteria
+	 * @return the courses
+	 * @throws EmptySearchException the empty search exception
+	 */
 	public ArrayList<Course> getCourses(String criteria) throws EmptySearchException {
 		ArrayList<Course> courses = getCourseByTeacher(criteria);
 		if (courses.size() > 0) {

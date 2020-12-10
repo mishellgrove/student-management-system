@@ -110,7 +110,7 @@ public class Director extends Employee {
 		int size = teachers.size();
 		for (int i = 0; i < size; i++) {
 			int minIdIndex = i;
-			for (int j = i + 1; j < size - 1; j++) {
+			for (int j = i + 1; j < size ; j++) {
 				if (comparator.compare(teachers.get(j), teachers.get(minIdIndex)) == -1) {
 					minIdIndex = j;
 				}

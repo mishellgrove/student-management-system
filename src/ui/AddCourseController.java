@@ -1,6 +1,3 @@
-/**
- * Sample Skeleton for 'addCourses.fxml' Controller Class
- */
 
 package ui;
 
@@ -20,51 +17,91 @@ import model.Course;
 import model.Director;
 import model.Teacher;
 
+/**
+ * The Class AddCourseController.
+ */
 public class AddCourseController {
 
+	/** The code txt. */
 	@FXML // fx:id="codeTxt"
 	private TextField codeTxt; // Value injected by FXMLLoader
 
+	/** The name txt. */
 	@FXML // fx:id="nameTxt"
 	private TextField nameTxt; // Value injected by FXMLLoader
 
+	/** The description txt. */
 	@FXML // fx:id="descriptionTxt"
 	private TextField descriptionTxt; // Value injected by FXMLLoader
 
+	/** The table view. */
 	@FXML // fx:id="tableView"
 	private TableView<Course> tableView; // Value injected by FXMLLoader
 
+	/** The code TC. */
 	@FXML // fx:id="codeTC"
 	private TableColumn<Course, String> codeTC; // Value injected by FXMLLoader
 
+	/** The name TC. */
 	@FXML // fx:id="nameTC"
 	private TableColumn<Course, String> nameTC; // Value injected by FXMLLoader
 
+	/** The description TC. */
 	@FXML // fx:id="descriptionTC"
 	private TableColumn<Course, String> descriptionTC; // Value injected by FXMLLoader
 
+	/** The teacher TC. */
 	@FXML // fx:id="teacherTC"
 	private TableColumn<Course, Teacher> teacherTC; // Value injected by FXMLLoader
+	
+	/** The director. */
 	private Director director;
+	
+	/** The last controller. */
 	private DirectorInitController lastController;
 
+	/**
+	 * Gets the director.
+	 *
+	 * @return the director
+	 */
 	public Director getDirector() {
 		return director;
 	}
 
+	/**
+	 * Sets the director.
+	 *
+	 * @param director the new director
+	 */
 	public void setDirector(Director director) {
 		this.director = director;
 		initTableView();
 	}
 
+	/**
+	 * Gets the last controller.
+	 *
+	 * @return the last controller
+	 */
 	public DirectorInitController getLastController() {
 		return lastController;
 	}
 
+	/**
+	 * Sets the last controller.
+	 *
+	 * @param lastController the new last controller
+	 */
 	public void setLastController(DirectorInitController lastController) {
 		this.lastController = lastController;
 	}
 
+	/**
+	 * Adds the.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void add(ActionEvent event) {
 		if (isInputValid()) {
@@ -76,12 +113,18 @@ public class AddCourseController {
 				descriptionTxt.setText("");
 				MainController.showAlert("Added the course: " + nameTxt.getText(), "INFORMATION",
 						AlertType.CONFIRMATION);
+				lastController.initTableView();
 			} catch (NullEntityException e) {
 				MainController.showAlert(e.getMessage(), "ERROR", AlertType.ERROR);
 			}
 		}
 	}
 
+	/**
+	 * Change teacher.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void changeTeacher(ActionEvent event) {
 		Course course = tableView.getSelectionModel().getSelectedItem();
@@ -109,6 +152,13 @@ public class AddCourseController {
 		}
 	}
 
+	/**
+	 * Show input text dialog.
+	 *
+	 * @param message the message
+	 * @param title the title
+	 * @return the string
+	 */
 	private String showInputTextDialog(String message, String title) {
 		String out = "";
 		TextInputDialog dialog = new TextInputDialog();
@@ -124,6 +174,11 @@ public class AddCourseController {
 		return out;
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void remove(ActionEvent event) {
 		Course courseSelected = tableView.getSelectionModel().getSelectedItem();
@@ -146,10 +201,18 @@ public class AddCourseController {
 		}
 	}
 
+	/**
+	 * Initialize.
+	 */
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
 	}
 
+	/**
+	 * Checks if is input valid.
+	 *
+	 * @return true, if is input valid
+	 */
 	public boolean isInputValid() {
 		String errorMessage = "";
 		boolean isValid = false;
@@ -176,6 +239,9 @@ public class AddCourseController {
 		return isValid;
 	}
 
+	/**
+	 * Inits the table view.
+	 */
 	private void initTableView() {
 		codeTC.setCellValueFactory(new PropertyValueFactory<Course, String>("id"));
 		nameTC.setCellValueFactory(new PropertyValueFactory<Course, String>("name"));

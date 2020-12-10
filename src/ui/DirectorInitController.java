@@ -21,56 +21,104 @@ import javafx.stage.Stage;
 import model.Director;
 import model.Teacher;
 
+/**
+ * The Class DirectorInitController.
+ */
 public class DirectorInitController {
 
+	/** The info director label. */
 	@FXML // fx:id="infoDirectorLabel"
 	private Label infoDirectorLabel; // Value injected by FXMLLoader
 
+	/** The table view. */
 	@FXML // fx:id="tableView"
 	private TableView<Teacher> tableView; // Value injected by FXMLLoader
 
+	/** The code TC. */
 	@FXML // fx:id="codeTC"
 	private TableColumn<Teacher, String> codeTC; // Value injected by FXMLLoader
 
+	/** The name TC. */
 	@FXML // fx:id="nameTC"
 	private TableColumn<Teacher, String> nameTC; // Value injected by FXMLLoader
 
+	/** The lastname TC. */
 	@FXML // fx:id="lastnameTC"
 	private TableColumn<Teacher, String> lastnameTC; // Value injected by FXMLLoader
 
+	/** The salary TC. */
 	@FXML // fx:id="salaryTC"
 	private TableColumn<Teacher, Double> salaryTC; // Value injected by FXMLLoader
+	
+	/** The last controller. */
 	private LoginController lastController;
+	
+	/** The director. */
 	private Director director;
 
+	/**
+	 * Gets the last controller.
+	 *
+	 * @return the last controller
+	 */
 	public LoginController getLastController() {
 		return lastController;
 	}
 
+	/**
+	 * Sets the last controller.
+	 *
+	 * @param lastController the new last controller
+	 */
 	public void setLastController(LoginController lastController) {
 		this.lastController = lastController;
 	}
 
+	/**
+	 * Gets the director.
+	 *
+	 * @return the director
+	 */
 	public Director getDirector() {
 		return director;
 	}
 
+	/**
+	 * Sets the director.
+	 *
+	 * @param director the new director
+	 */
 	public void setDirector(Director director) {
 		this.director = director;
 		initTableView();
 		infoDirectorLabel.setText("Director: " + director.getName() + " " + director.getLastName());
 	}
 
+	/**
+	 * Go back button.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void goBackButton(ActionEvent event) {
 		lastController.getMainController().loadLogin();
 	}
 
+	/**
+	 * Adds the course.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void addCourse(ActionEvent event) {
 		loadAddCoursesView();
 	}
 
+	/**
+	 * Adds the course to teacher.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void addCourseToTeacher(ActionEvent event) {
 		Teacher teacherSelected = tableView.getSelectionModel().getSelectedItem();
@@ -97,6 +145,13 @@ public class DirectorInitController {
 		}
 	}
 
+	/**
+	 * Show input text dialog.
+	 *
+	 * @param message the message
+	 * @param title the title
+	 * @return the string
+	 */
 	private String showInputTextDialog(String message, String title) {
 		String out = "";
 		TextInputDialog dialog = new TextInputDialog();
@@ -112,11 +167,19 @@ public class DirectorInitController {
 		return out;
 	}
 
+	/**
+	 * Adds the teacher.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void addTeacher(ActionEvent event) {
 		loadAddTeachersView();
 	}
 
+	/**
+	 * Load add courses view.
+	 */
 	public void loadAddCoursesView() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("addCourses.fxml"));
@@ -134,6 +197,9 @@ public class DirectorInitController {
 		}
 	}
 
+	/**
+	 * Load add teachers view.
+	 */
 	public void loadAddTeachersView() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("addTeacher.fxml"));
@@ -151,6 +217,11 @@ public class DirectorInitController {
 		}
 	}
 
+	/**
+	 * Sort by name.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void sortByName(ActionEvent event) {
 		tableView.getItems().clear();
@@ -158,11 +229,17 @@ public class DirectorInitController {
 		tableView.refresh();
 	}
 
+	/**
+	 * Initialize.
+	 */
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
 	}
 
-	private void initTableView() {
+	/**
+	 * Inits the table view.
+	 */
+	public void initTableView() {
 		codeTC.setCellValueFactory(new PropertyValueFactory<Teacher, String>("code"));
 		nameTC.setCellValueFactory(new PropertyValueFactory<Teacher, String>("name"));
 		lastnameTC.setCellValueFactory(new PropertyValueFactory<Teacher, String>("lastName"));

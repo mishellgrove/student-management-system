@@ -1,6 +1,3 @@
-/**
- * Sample Skeleton for 'registerStuden.fxml' Controller Class
- */
 
 package ui;
 
@@ -15,43 +12,81 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Course;
 import model.Register;
+import model.Teacher;
 
+/**
+ * The Class RegisterStudentController.
+ */
 public class RegisterStudentController {
 
+	/** The code txt. */
 	@FXML // fx:id="codeTxt"
 	private TextField codeTxt; // Value injected by FXMLLoader
 
+	/** The table view. */
 	@FXML // fx:id="tableView"
 	private TableView<Course> tableView; // Value injected by FXMLLoader
 
+	/** The code TC. */
 	@FXML // fx:id="codeTC"
 	private TableColumn<Course, String> codeTC; // Value injected by FXMLLoader
 
+	/** The course TC. */
 	@FXML // fx:id="courseTC"
 	private TableColumn<Course, String> courseTC; // Value injected by FXMLLoader
 
+	/** The price TC. */
 	@FXML // fx:id="pŕiceTC"
 	private TableColumn<Course, String> priceTC; // Value injected by FXMLLoader
+
+	/** The register. */
 	private Register register;
+
+	/** The last controller. */
 	private StudentsController lastController;
 
+	/**
+	 * Gets the register.
+	 *
+	 * @return the register
+	 */
 	public Register getRegister() {
 		return register;
 	}
 
+	/**
+	 * Sets the register.
+	 *
+	 * @param register the new register
+	 */
 	public void setRegister(Register register) {
 		this.register = register;
 	}
 
+	/**
+	 * Gets the last controller.
+	 *
+	 * @return the last controller
+	 */
 	public StudentsController getLastController() {
 		return lastController;
 	}
 
+	/**
+	 * Sets the last controller.
+	 *
+	 * @param lastController the new last controller
+	 */
 	public void setLastController(StudentsController lastController) {
 		this.lastController = lastController;
 		initTableView();
 	}
 
+	/**
+	 * Adds the course.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void addCourse(ActionEvent event) {
 		if (!codeTxt.getText().isEmpty()) {
@@ -74,6 +109,11 @@ public class RegisterStudentController {
 		}
 	}
 
+	/**
+	 * Removes the course.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void removeCourse(ActionEvent event) {
 		if (!codeTxt.getText().isEmpty()) {
@@ -89,22 +129,34 @@ public class RegisterStudentController {
 		}
 	}
 
+	/**
+	 * Go back button.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void goBackButton(ActionEvent event) {
 		lastController.getLastController().loadStudentsView();
 	}
 
+	/**
+	 * Initialize.
+	 */
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
 
 	}
 
+	/**
+	 * Inits the table view.
+	 */
 	private void initTableView() {
+		Teacher teacher = lastController.getTeacher();
 		codeTC.setCellValueFactory(new PropertyValueFactory<Course, String>("id"));
 		courseTC.setCellValueFactory(new PropertyValueFactory<Course, String>("name"));
 		priceTC.setCellValueFactory(new PropertyValueFactory<Course, String>("description"));
 		tableView.getItems().clear();
-		tableView.getItems().addAll(
-				lastController.getLastController().getMainController().getMain().getVirtualSchool().getCourses());
+		tableView.getItems().addAll(lastController.getLastController().getMainController().getMain().getVirtualSchool()
+				.getCoursesByTeacher(teacher.getCode()));
 	}
 }

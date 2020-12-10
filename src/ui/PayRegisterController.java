@@ -16,32 +16,55 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Register;
 import model.Student;
 
+/**
+ * The Class PayRegisterController.
+ */
 public class PayRegisterController {
 
+	/** The amount label. */
 	@FXML // fx:id="amountLabel"
 	private Label amountLabel; // Value injected by FXMLLoader
 
+	/** The table view. */
 	@FXML // fx:id="tableView"
 	private TableView<Register> tableView; // Value injected by FXMLLoader
 
+	/** The code TC. */
 	@FXML // fx:id="codeTC"
 	private TableColumn<Register, String> codeTC; // Value injected by FXMLLoader
 
+	/** The date TC. */
 	@FXML // fx:id="dateTC"
 	private TableColumn<Register, Date> dateTC; // Value injected by FXMLLoader
 
+	/** The total TC. */
 	@FXML // fx:id="totalTC"
 	private TableColumn<Register, Double> totalTC; // Value injected by FXMLLoader
 
+	/** The state TC. */
 	@FXML // fx:id="stateTC"
 	private TableColumn<Register, String> stateTC; // Value injected by FXMLLoader
+
+	/** The student. */
 	private Student student;
+
+	/** The last controller. */
 	private StudentsViewController lastController;
 
+	/**
+	 * Gets the student.
+	 *
+	 * @return the student
+	 */
 	public Student getStudent() {
 		return student;
 	}
 
+	/**
+	 * Sets the student.
+	 *
+	 * @param student the new student
+	 */
 	public void setStudent(Student student) {
 		this.student = student;
 		initTableView();
@@ -49,14 +72,29 @@ public class PayRegisterController {
 		amountLabel.setText("$ " + student.getAccount().getAmount());
 	}
 
+	/**
+	 * Gets the last controller.
+	 *
+	 * @return the last controller
+	 */
 	public StudentsViewController getLastController() {
 		return lastController;
 	}
 
+	/**
+	 * Sets the last controller.
+	 *
+	 * @param lastController the new last controller
+	 */
 	public void setLastController(StudentsViewController lastController) {
 		this.lastController = lastController;
 	}
 
+	/**
+	 * Deposit money.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void depositMoney(ActionEvent event) {
 		String amount = showInputTextDialog("Add the amount \n(Only numbers please!)", "Amount");
@@ -75,6 +113,13 @@ public class PayRegisterController {
 		}
 	}
 
+	/**
+	 * Show input text dialog.
+	 *
+	 * @param message the message
+	 * @param title   the title
+	 * @return the string
+	 */
 	private String showInputTextDialog(String message, String title) {
 		String out = "";
 		TextInputDialog dialog = new TextInputDialog();
@@ -90,18 +135,27 @@ public class PayRegisterController {
 		return out;
 	}
 
+	/**
+	 * Pay.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void pay(ActionEvent event) {
 		Register registerSelected = tableView.getSelectionModel().getSelectedItem();
 		if (registerSelected != null) {
 			try {
-				student.getAccount().withdrawMoney(registerSelected.getTotal());
-				MainController.showAlert(
-						"The register: " + registerSelected.getId() + " was paid\n Thanks! enjoy the course",
-						"INFORMATION", AlertType.INFORMATION);
-				registerSelected.setState("Active");
-				initTableView();
-				amountLabel.setText("$" + student.getAccount().getAmount());
+				if (registerSelected.getState().equals("Active")) {
+					MainController.showAlert("The register is already paid", "INFORMATION", AlertType.WARNING);
+				} else {
+					student.getAccount().withdrawMoney(registerSelected.getTotal());
+					MainController.showAlert(
+							"The register: " + registerSelected.getId() + " was paid\n Thanks! enjoy the course",
+							"INFORMATION", AlertType.INFORMATION);
+					registerSelected.setState("Active");
+					initTableView();
+					amountLabel.setText("$" + student.getAccount().getAmount());
+				}
 			} catch (NotEnoughMoneyException e) {
 				MainController.showAlert(e.getMessage(), "ERROR", AlertType.ERROR);
 			}
@@ -110,11 +164,17 @@ public class PayRegisterController {
 		}
 	}
 
+	/**
+	 * Initialize.
+	 */
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
 
 	}
 
+	/**
+	 * Inits the table view.
+	 */
 	private void initTableView() {
 		codeTC.setCellValueFactory(new PropertyValueFactory<Register, String>("id"));
 		dateTC.setCellValueFactory(new PropertyValueFactory<Register, Date>("date"));

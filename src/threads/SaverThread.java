@@ -38,9 +38,9 @@ public class SaverThread extends Thread {
 	@Override
 	public void run() {
 		while(!stoper) {
-			main.saveData();
 			try {
 				Thread.sleep(5000);
+				main.saveData();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

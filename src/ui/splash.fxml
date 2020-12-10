@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="369.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.SplashController">
+   <children>
+      <StackPane fx:id="pane" prefHeight="400.0" prefWidth="372.0" style="-fx-background-color: #bec6c6;">
+         <children>
+            <Circle fx:id="circle1" fill="#1f93ff00" radius="100.0" stroke="#5e33a8" strokeType="INSIDE" strokeWidth="10.0" style="-fx-stroke-dash-array: 40;" />
+            <Circle fx:id="circle2" fill="#ff212100" radius="70.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="7.0" style="-fx-stroke-dash-array: 24;" />
+            <Label prefHeight="48.0" prefWidth="74.0" text="Welcome" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Ellipse fx:id="ellipse" fill="#1f93ff00" radiusX="162.0" radiusY="122.0" stroke="#3cbf61" strokeType="INSIDE" strokeWidth="11.0" style="-fx-stroke-dash-array: 40;" />
+         </children>
+      </StackPane>
+   </children>
+</HBox>

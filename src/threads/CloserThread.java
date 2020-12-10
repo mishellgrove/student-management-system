@@ -39,8 +39,6 @@ public class CloserThread extends Thread {
 				public void run() {
 					stage.hide();
 					main.loadMain(stage);
-					Thread saver = new SaverThread(main);
-					saver.start();
 				}
 			});
 		} catch (InterruptedException e) {

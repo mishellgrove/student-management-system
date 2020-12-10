@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.VirtualSchool;
+import threads.SaverThread;
 
 /**
  * The Class Main.
@@ -20,7 +22,7 @@ import model.VirtualSchool;
 public class Main extends Application {
 
 	/** The school. */
-	private final VirtualSchool school = new VirtualSchool("SAI");
+	private VirtualSchool school = new VirtualSchool("SAI");
 
 	/**
 	 * The main method.
@@ -70,6 +72,8 @@ public class Main extends Application {
 	public void loadMain(Stage primaryStage) {
 		loadDefaultData();
 		try {
+			Thread saver = new SaverThread(this);
+			saver.start();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
 			Parent root = loader.load();
 			MainController controller = loader.getController();
@@ -90,6 +94,7 @@ public class Main extends Application {
 
 		@Override
 		public void handle(WindowEvent event) {
+			saveData();
 			System.exit(0);
 		}
 	};
@@ -99,13 +104,17 @@ public class Main extends Application {
 	 */
 	public void loadDefaultData() {
 		try {
-			school.loadData();
+			school = (VirtualSchool)school.loadVirtualSchoolData();
 			if (school.getDirectors().size() == 0) {
 				school.addDirector("1", "Roberto", "Castro", "12345", 5000000);
-				school.saveDirectors();
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			File file1 = new File(VirtualSchool.filePath);
+			try {
+				file1.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -132,4 +141,3 @@ public class Main extends Application {
 		return school;
 	}
 }
-

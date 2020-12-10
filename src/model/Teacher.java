@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
+
 
 import customExceptions.BinaryTreeCastException;
 import customExceptions.EntityRepeatedException;
@@ -146,6 +148,7 @@ public class Teacher extends Employee {
 		}
 		StudentComparator comparator = new StudentComparator();
 		Collections.sort(students, comparator);
+		Collections.reverse(students);
 		return students;
 	}
 
@@ -296,6 +299,7 @@ public class Teacher extends Employee {
 
 	@Override
 	public String toString() {
+		
 		return getName() + " " + getLastName();
 	}
 

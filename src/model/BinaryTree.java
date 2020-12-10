@@ -1,4 +1,9 @@
+/*
+ * 
+ */
 package model;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -6,8 +11,12 @@ import java.util.ArrayList;
  *
  * @param <T> the generic type
  */
-public class BinaryTree<T extends Comparable<T>> {
+public class BinaryTree<T extends Comparable<T>> implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** The root. */
 	private Node<T> root;
 

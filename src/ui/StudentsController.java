@@ -16,37 +16,56 @@ import model.Register;
 import model.Student;
 import model.Teacher;
 
+/**
+ * The Class StudentsController.
+ */
 public class StudentsController {
 
+	/** The code txt. */
 	@FXML // fx:id="codeTxt"
 	private TextField codeTxt; // Value injected by FXMLLoader
 
+	/** The name txt. */
 	@FXML // fx:id="nameTxt"
 	private TextField nameTxt; // Value injected by FXMLLoader
 
+	/** The lastname txt. */
 	@FXML // fx:id="lastnameTxt"
 	private TextField lastnameTxt; // Value injected by FXMLLoader
 
+	/** The password field. */
 	@FXML // fx:id="passwordField"
 	private PasswordField passwordField; // Value injected by FXMLLoader
 
+	/** The table view students. */
 	@FXML // fx:id="tableViewStudents"
 	private TableView<Student> tableViewStudents; // Value injected by FXMLLoader
 
+	/** The code TC. */
 	@FXML // fx:id="codeTC"
 	private TableColumn<Student, String> codeTC; // Value injected by FXMLLoader
 
+	/** The name TC. */
 	@FXML // fx:id="nameTC"
 	private TableColumn<Student, String> nameTC; // Value injected by FXMLLoader
 
+	/** The lastname TC. */
 	@FXML // fx:id="lastnameTC"
 	private TableColumn<Student, String> lastnameTC; // Value injected by FXMLLoader
 
+	/** The teacher. */
 	private Teacher teacher;
+	
+	/** The last controller. */
 	private TeacherController lastController;
 
 
 
+	/**
+	 * Adds the.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void add(ActionEvent event) {
 		if (isInputValid()) {
@@ -62,6 +81,11 @@ public class StudentsController {
 		}
 	}
 
+	/**
+	 * Adds the register.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void addRegister(ActionEvent event) {
 		if (tableViewStudents.getSelectionModel().getSelectedItem() != null) {
@@ -72,6 +96,11 @@ public class StudentsController {
 		}
 	}
 
+	/**
+	 * Load students view.
+	 *
+	 * @param register the register
+	 */
 	public void loadStudentsView(Register register) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("registerStudent.fxml"));
@@ -85,6 +114,11 @@ public class StudentsController {
 		}
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void delete(ActionEvent event) {
 		if (tableViewStudents.getSelectionModel().getSelectedItem() != null) {
@@ -108,33 +142,64 @@ public class StudentsController {
 		}
 	}
 
+	/**
+	 * Go back button.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void goBackButton(ActionEvent event) {
 		lastController.getLastController().loadTeacherView(teacher);
 	}
 
+	/**
+	 * Initialize.
+	 */
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
 
 	}
 
+	/**
+	 * Gets the teacher.
+	 *
+	 * @return the teacher
+	 */
 	public Teacher getTeacher() {
 		return teacher;
 	}
 
+	/**
+	 * Sets the teacher.
+	 *
+	 * @param teacher the new teacher
+	 */
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 		initTableView();
 	}
 
+	/**
+	 * Gets the last controller.
+	 *
+	 * @return the last controller
+	 */
 	public TeacherController getLastController() {
 		return lastController;
 	}
 
+	/**
+	 * Sets the last controller.
+	 *
+	 * @param lastController the new last controller
+	 */
 	public void setLastController(TeacherController lastController) {
 		this.lastController = lastController;
 	}
 
+	/**
+	 * Inits the table view.
+	 */
 	private void initTableView() {
 		codeTC.setCellValueFactory(new PropertyValueFactory<Student, String>("code"));
 		nameTC.setCellValueFactory(new PropertyValueFactory<Student, String>("name"));
@@ -144,6 +209,11 @@ public class StudentsController {
 		tableViewStudents.refresh();
 	}
 
+	/**
+	 * Checks if is input valid.
+	 *
+	 * @return true, if is input valid
+	 */
 	private boolean isInputValid() {
 		boolean isValid = false;
 		String errorMessage = "";

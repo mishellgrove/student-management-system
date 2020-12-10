@@ -12,57 +12,99 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Director;
 import model.Teacher;
 
+/**
+ * The Class AddTeacherController.
+ */
 public class AddTeacherController {
 
+	/** The code txt. */
 	@FXML // fx:id="codeTxt"
 	private TextField codeTxt; // Value injected by FXMLLoader
 
+	/** The name txt. */
 	@FXML // fx:id="nameTxt"
 	private TextField nameTxt; // Value injected by FXMLLoader
 
+	/** The last name txt. */
 	@FXML // fx:id="lastNameTxt"
 	private TextField lastNameTxt; // Value injected by FXMLLoader
 
+	/** The password field. */
 	@FXML // fx:id="passwordField"
 	private PasswordField passwordField; // Value injected by FXMLLoader
 
+	/** The salary txt. */
 	@FXML // fx:id="salaryTxt"
 	private TextField salaryTxt; // Value injected by FXMLLoader
 
+	/** The table view. */
 	@FXML // fx:id="tableView"
 	private TableView<Teacher> tableView; // Value injected by FXMLLoader
 
+	/** The code TC. */
 	@FXML // fx:id="codeTC"
 	private TableColumn<Teacher, String> codeTC; // Value injected by FXMLLoader
 
+	/** The name TC. */
 	@FXML // fx:id="nameTC"
 	private TableColumn<Teacher, String> nameTC; // Value injected by FXMLLoader
 
+	/** The lastname TC. */
 	@FXML // fx:id="lastnameTC"
 	private TableColumn<Teacher, String> lastnameTC; // Value injected by FXMLLoader
 
+	/** The salary TC. */
 	@FXML // fx:id="salaryTC"
 	private TableColumn<Teacher, Double> salaryTC; // Value injected by FXMLLoader
+	
+	/** The last controller. */
 	private DirectorInitController lastController;
+	
+	/** The director. */
 	private Director director;
 
+	/**
+	 * Gets the last controller.
+	 *
+	 * @return the last controller
+	 */
 	public DirectorInitController getLastController() {
 		return lastController;
 	}
 
+	/**
+	 * Sets the last controller.
+	 *
+	 * @param lastController the new last controller
+	 */
 	public void setLastController(DirectorInitController lastController) {
 		this.lastController = lastController;
 	}
 
+	/**
+	 * Gets the director.
+	 *
+	 * @return the director
+	 */
 	public Director getDirector() {
 		return director;
 	}
 
+	/**
+	 * Sets the director.
+	 *
+	 * @param director the new director
+	 */
 	public void setDirector(Director director) {
 		this.director = director;
 		initTableView();
 	}
 
+	/**
+	 * Adds the.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void add(ActionEvent event) {
 		if (isInputValid()) {
@@ -83,6 +125,11 @@ public class AddTeacherController {
 		}
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param event the event
+	 */
 	@FXML
 	void remove(ActionEvent event) {
 		Teacher teacherSelected = tableView.getSelectionModel().getSelectedItem();
@@ -100,10 +147,18 @@ public class AddTeacherController {
 		}
 	}
 
+	/**
+	 * Initialize.
+	 */
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
 	}
 
+	/**
+	 * Checks if is input valid.
+	 *
+	 * @return true, if is input valid
+	 */
 	public boolean isInputValid() {
 		String errorMessage = "";
 		boolean isValid = false;
@@ -140,6 +195,9 @@ public class AddTeacherController {
 
 	}
 
+	/**
+	 * Inits the table view.
+	 */
 	private void initTableView() {
 		codeTC.setCellValueFactory(new PropertyValueFactory<Teacher, String>("code"));
 		nameTC.setCellValueFactory(new PropertyValueFactory<Teacher, String>("name"));

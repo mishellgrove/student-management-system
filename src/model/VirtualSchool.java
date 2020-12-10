@@ -499,6 +499,19 @@ public class VirtualSchool implements IPaths, Serializable {
 	}
 
 	/**
+	 * Gets the courses by teacher.
+	 *
+	 * @param idTeacher the id teacher
+	 * @return the courses by teacher
+	 */
+	public ArrayList<Course> getCoursesByTeacher(String idTeacher) {
+		ArrayList<Course> courses = new ArrayList<Course>();
+		int index = searchTeacher(idTeacher);
+		courses = teachers.get(index).getCourses();
+		return courses;
+	}
+
+	/**
 	 * Search user.
 	 *
 	 * @param user     the user
@@ -506,7 +519,6 @@ public class VirtualSchool implements IPaths, Serializable {
 	 * @return the person
 	 */
 	public Person searchUser(String user, String password) {
-
 		sortTeachers();
 		int index = searchTeacher(user);
 		if (index != -1) {
@@ -536,135 +548,31 @@ public class VirtualSchool implements IPaths, Serializable {
 	// --------------PERSISTANCE-----------------
 
 	/**
-	 * Save courses.
-	 *
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public void saveCourses() throws FileNotFoundException, IOException {
-		ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePathCourses));
-		os.writeObject(courses);
-		os.close();
-	}
-
-	/**
-	 * Save teachers.
-	 *
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public void saveTeachers() throws FileNotFoundException, IOException {
-		ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePathTeachers));
-		os.writeObject(teachers);
-		os.close();
-	}
-
-	/**
-	 * Save students.
-	 *
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public void saveStudents() throws FileNotFoundException, IOException {
-		ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePathStudents));
-		os.writeObject(students);
-		os.close();
-	}
-
-	/**
-	 * Save directors.
-	 *
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public void saveDirectors() throws FileNotFoundException, IOException {
-		ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePathDirectors));
-		os.writeObject(directors);
-		os.close();
-	}
-
-	/**
-	 * Load courses data.
-	 *
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws ClassNotFoundException the class not found exception
-	 */
-	@SuppressWarnings("unchecked")
-	public void loadCoursesData() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePathCourses));
-		courses = (ArrayList<Course>) ois.readObject();
-		ois.close();
-	}
-
-	/**
-	 * Load teachers data.
-	 *
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws ClassNotFoundException the class not found exception
-	 */
-	@SuppressWarnings("unchecked")
-	public void loadTeachersData() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePathTeachers));
-		teachers = (ArrayList<Teacher>) ois.readObject();
-		ois.close();
-	}
-
-	/**
-	 * Load students data.
-	 *
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws ClassNotFoundException the class not found exception
-	 */
-	@SuppressWarnings("unchecked")
-	public void loadStudentsData() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePathStudents));
-		students = (ArrayList<Student>) ois.readObject();
-		ois.close();
-	}
-
-	/**
-	 * Load directors data.
-	 *
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws ClassNotFoundException the class not found exception
-	 */
-	@SuppressWarnings("unchecked")
-	public void loadDirectorsData() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePathDirectors));
-		directors = (ArrayList<Director>) ois.readObject();
-		ois.close();
-	}
-
-	/**
 	 * Save data.
 	 *
 	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException           Signals that an I/O exception has occurred.
 	 */
 	public void saveData() throws FileNotFoundException, IOException {
-		saveCourses();
-		saveStudents();
-		saveDirectors();
-		saveTeachers();
+		ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePath));
+		os.writeObject(this);
+		os.close();
 	}
 
 	/**
-	 * Load data.
+	 * Load virtual school data.
 	 *
-	 * @throws FileNotFoundException the file not found exception
+	 * @return the object
+	 * @throws IOException            Signals that an I/O exception has occurred.
 	 * @throws ClassNotFoundException the class not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public void loadData() throws FileNotFoundException, ClassNotFoundException, IOException {
-		loadCoursesData();
-		loadDirectorsData();
-		loadStudentsData();
-		loadTeachersData();
+	public Object loadVirtualSchoolData() throws IOException, ClassNotFoundException {
+		Object virtualSchool;
+		FileInputStream file = new FileInputStream(filePath);
+		ObjectInputStream input = new ObjectInputStream(file);
+		virtualSchool = input.readObject();
+		input.close();
+		return virtualSchool;
 	}
 
 }
-

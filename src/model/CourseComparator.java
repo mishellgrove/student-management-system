@@ -8,7 +8,7 @@ public class CourseComparator implements Comparator<Course> {
 	public int compare(Course arg0, Course arg1) {
 		String name1 = arg0.getName();
 		String name2 = arg1.getName();
-		if (name1.compareTo(name2) > 0) {
+		if (name1.compareToIgnoreCase(name2) > 0) {
 			return 1;
 		} else if (name1.compareTo(name2) < 0) {
 			return -1;
