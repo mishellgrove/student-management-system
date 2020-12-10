@@ -1,5 +1,12 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import customExceptions.NullEntityException;
@@ -7,7 +14,10 @@ import customExceptions.NullEntityException;
 /**
  * The Class VirtualSchool.
  */
-public class VirtualSchool implements IPaths {
+public class VirtualSchool implements IPaths, Serializable {
+
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
 
 	/** The name. */
 	private String name;
@@ -35,13 +45,6 @@ public class VirtualSchool implements IPaths {
 		courses = new ArrayList<Course>();
 		students = new ArrayList<Student>();
 		this.name = name;
-	}
-
-	/**
-	 * Load data.
-	 */
-	public void loadData() {
-
 	}
 
 	/**
@@ -137,10 +140,10 @@ public class VirtualSchool implements IPaths {
 	/**
 	 * Adds the course.
 	 *
-	 * @param id the id
-	 * @param name the name
+	 * @param id          the id
+	 * @param name        the name
 	 * @param description the description
-	 * @param teacher the teacher
+	 * @param teacher     the teacher
 	 * @throws NullEntityException the null entity exception
 	 */
 	public void addCourse(String id, String name, String description, Teacher teacher) throws NullEntityException {
@@ -156,8 +159,8 @@ public class VirtualSchool implements IPaths {
 	/**
 	 * Adds the course.
 	 *
-	 * @param id the id
-	 * @param name the name
+	 * @param id          the id
+	 * @param name        the name
 	 * @param description the description
 	 * @throws NullEntityException the null entity exception
 	 */
@@ -208,8 +211,8 @@ public class VirtualSchool implements IPaths {
 	 * Search course.
 	 *
 	 * @param idCourse the id course
-	 * @param low the low
-	 * @param high the high
+	 * @param low      the low
+	 * @param high     the high
 	 * @return the int
 	 */
 	private int searchCourse(String idCourse, int low, int high) {
@@ -239,11 +242,11 @@ public class VirtualSchool implements IPaths {
 	/**
 	 * Adds the teacher.
 	 *
-	 * @param code the code
-	 * @param name the name
+	 * @param code     the code
+	 * @param name     the name
 	 * @param lastName the last name
 	 * @param password the password
-	 * @param salary the salary
+	 * @param salary   the salary
 	 * @throws NullEntityException the null entity exception
 	 */
 	public void addTeacher(String code, String name, String lastName, String password, double salary)
@@ -280,8 +283,8 @@ public class VirtualSchool implements IPaths {
 	 * Search teacher.
 	 *
 	 * @param codeTeacher the code teacher
-	 * @param low the low
-	 * @param high the high
+	 * @param low         the low
+	 * @param high        the high
 	 * @return the int
 	 */
 	private int searchTeacher(String codeTeacher, int low, int high) {
@@ -325,8 +328,8 @@ public class VirtualSchool implements IPaths {
 	/**
 	 * Adds the students.
 	 *
-	 * @param code the code
-	 * @param name the name
+	 * @param code     the code
+	 * @param name     the name
 	 * @param lastName the last name
 	 * @param password the password
 	 * @throws NullEntityException the null entity exception
@@ -367,8 +370,8 @@ public class VirtualSchool implements IPaths {
 	 * Search student.
 	 *
 	 * @param codeStudent the code student
-	 * @param low the low
-	 * @param high the high
+	 * @param low         the low
+	 * @param high        the high
 	 * @return the int
 	 */
 	private int searchStudent(String codeStudent, int low, int high) {
@@ -412,11 +415,11 @@ public class VirtualSchool implements IPaths {
 	/**
 	 * Adds the director.
 	 *
-	 * @param code the code
-	 * @param name the name
+	 * @param code     the code
+	 * @param name     the name
 	 * @param lastName the last name
 	 * @param password the password
-	 * @param salary the salary
+	 * @param salary   the salary
 	 * @throws NullEntityException the null entity exception
 	 */
 	// -------------------------------------------------------------------
@@ -453,8 +456,8 @@ public class VirtualSchool implements IPaths {
 	 * Search director.
 	 *
 	 * @param codeDirector the code director
-	 * @param low the low
-	 * @param high the high
+	 * @param low          the low
+	 * @param high         the high
 	 * @return the int
 	 */
 	private int searchDirector(String codeDirector, int low, int high) {
@@ -498,7 +501,7 @@ public class VirtualSchool implements IPaths {
 	/**
 	 * Search user.
 	 *
-	 * @param user the user
+	 * @param user     the user
 	 * @param password the password
 	 * @return the person
 	 */
@@ -530,4 +533,138 @@ public class VirtualSchool implements IPaths {
 		}
 		return null;
 	}
+	// --------------PERSISTANCE-----------------
+
+	/**
+	 * Save courses.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void saveCourses() throws FileNotFoundException, IOException {
+		ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePathCourses));
+		os.writeObject(courses);
+		os.close();
+	}
+
+	/**
+	 * Save teachers.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void saveTeachers() throws FileNotFoundException, IOException {
+		ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePathTeachers));
+		os.writeObject(teachers);
+		os.close();
+	}
+
+	/**
+	 * Save students.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void saveStudents() throws FileNotFoundException, IOException {
+		ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePathStudents));
+		os.writeObject(students);
+		os.close();
+	}
+
+	/**
+	 * Save directors.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void saveDirectors() throws FileNotFoundException, IOException {
+		ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(filePathDirectors));
+		os.writeObject(directors);
+		os.close();
+	}
+
+	/**
+	 * Load courses data.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws ClassNotFoundException the class not found exception
+	 */
+	@SuppressWarnings("unchecked")
+	public void loadCoursesData() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePathCourses));
+		courses = (ArrayList<Course>) ois.readObject();
+		ois.close();
+	}
+
+	/**
+	 * Load teachers data.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws ClassNotFoundException the class not found exception
+	 */
+	@SuppressWarnings("unchecked")
+	public void loadTeachersData() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePathTeachers));
+		teachers = (ArrayList<Teacher>) ois.readObject();
+		ois.close();
+	}
+
+	/**
+	 * Load students data.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws ClassNotFoundException the class not found exception
+	 */
+	@SuppressWarnings("unchecked")
+	public void loadStudentsData() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePathStudents));
+		students = (ArrayList<Student>) ois.readObject();
+		ois.close();
+	}
+
+	/**
+	 * Load directors data.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws ClassNotFoundException the class not found exception
+	 */
+	@SuppressWarnings("unchecked")
+	public void loadDirectorsData() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePathDirectors));
+		directors = (ArrayList<Director>) ois.readObject();
+		ois.close();
+	}
+
+	/**
+	 * Save data.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void saveData() throws FileNotFoundException, IOException {
+		saveCourses();
+		saveStudents();
+		saveDirectors();
+		saveTeachers();
+	}
+
+	/**
+	 * Load data.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws ClassNotFoundException the class not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void loadData() throws FileNotFoundException, ClassNotFoundException, IOException {
+		loadCoursesData();
+		loadDirectorsData();
+		loadStudentsData();
+		loadTeachersData();
+	}
+
 }
+

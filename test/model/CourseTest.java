@@ -1,13 +1,11 @@
 package model;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import customExceptions.BinaryTreeCastException;
 import customExceptions.EntityRepeatedException;
 import customExceptions.NullEntityException;
 
@@ -82,6 +80,30 @@ class CourseTest {
 		}
 		asserAux = course.getRegisters().size() == sizeRegisters - 1;
 		assertTrue("Could not removed the register", asserAux);
+	}
+
+	@Test
+	public void searchRegisterTest() {
+		setUpScenaryTwo();
+		int index = course.searchRegister("1");
+		int index2 = course.searchRegister("2");
+		int index3 = course.searchRegister("3");
+		int indexWrong = course.searchRegister("4");
+		assertTrue("The search is wrong", (index & index2 & index3) != -1 && indexWrong == -1);
+	}
+
+	@Test
+	public void initStudentsTest() {
+		setUpScenaryTwo();
+		course.initStudents();
+		ArrayList<Person> studentsPreorder = course.getStudents().getInOrder();
+		String nameFirst = "Amanda";
+		String nameSecond = "Barlos";
+		String nameThird = "Carlos";
+		boolean assert1 = nameFirst.equals(studentsPreorder.get(0).getName());
+		boolean assert2 = nameSecond.equals(studentsPreorder.get(1).getName());
+		boolean assert3 = nameThird.equals(studentsPreorder.get(2).getName());
+		assertTrue(assert1 && assert2 && assert3);
 	}
 
 }

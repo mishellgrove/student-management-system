@@ -10,6 +10,10 @@ import customExceptions.NullEntityException;
  */
 public class Director extends Employee {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** The school. */
 	private VirtualSchool school;
 

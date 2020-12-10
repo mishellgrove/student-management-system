@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,7 +10,12 @@ import customExceptions.NullEntityException;
 /**
  * The Class Register.
  */
-public class Register {
+public class Register implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	private String id;
@@ -288,5 +294,5 @@ public class Register {
 	public String toString() {
 		return "Register [id=" + id + "]";
 	}
-
+	
 }

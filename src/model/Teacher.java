@@ -12,6 +12,11 @@ import customExceptions.NullEntityException;
  */
 public class Teacher extends Employee {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/** The account. */
 	private TeacherAccount account;
 

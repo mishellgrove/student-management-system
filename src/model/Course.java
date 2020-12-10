@@ -1,17 +1,23 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import customExceptions.BinaryTreeCastException;
 import customExceptions.EntityRepeatedException;
 import customExceptions.NullEntityException;
-
+import model.BinaryTree;
 
 /**
  * The Class Course.
  */
-public class Course implements ICourse, Comparable<Course> {
+public class Course implements ICourse, Comparable<Course>, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/** The teacher. */
 	private Teacher teacher;
@@ -147,7 +153,7 @@ public class Course implements ICourse, Comparable<Course> {
 	 *
 	 * @throws BinaryTreeCastException the binary tree cast exception
 	 */
-	public void initStudents() throws BinaryTreeCastException {
+	public void initStudents(){
 		if (registers.size() == 0) {
 			return;
 		}

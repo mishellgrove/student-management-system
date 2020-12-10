@@ -6,6 +6,11 @@ package model;
 public class StudentAccount extends Account {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Instantiates a new student account.
 	 *
 	 * @param person the person
@@ -16,8 +21,14 @@ public class StudentAccount extends Account {
 		super(person, id, amount);
 	}
 
+	/**
+	 * Instantiates a new student account.
+	 *
+	 * @param id      the id
+	 * @param ammount the ammount
+	 */
 	public StudentAccount(String id, double ammount) {
 		super(id, ammount);
 	}
-	
+
 }

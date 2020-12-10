@@ -1,13 +1,19 @@
 package model;
 
+import java.io.Serializable;
+
 import customExceptions.AmountInputException;
 import customExceptions.NotEnoughMoneyException;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Account.
  */
-public abstract class Account implements IAccount, Comparable<Account> {
+public abstract class Account implements IAccount, Comparable<Account>, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/** The person. */
 	private Person person;
@@ -174,4 +180,7 @@ public abstract class Account implements IAccount, Comparable<Account> {
 		return true;
 	}
 
+	public String getExportFormat() {
+		return getId() + "," + getAmount();
+	}
 }

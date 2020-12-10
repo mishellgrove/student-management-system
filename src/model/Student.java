@@ -9,6 +9,11 @@ import customExceptions.EmptySearchException;
  */
 public class Student extends Person {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/** The registers. */
 	private ArrayList<Register> registers;
 

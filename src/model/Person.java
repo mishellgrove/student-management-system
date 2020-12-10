@@ -1,10 +1,16 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * The Class Person.
  */
-public abstract class Person implements Comparable<Person> {
+public abstract class Person implements Comparable<Person>, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** The code. */
 	private String code;
 	private String password;
